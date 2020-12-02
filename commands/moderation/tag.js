@@ -14,6 +14,7 @@ module.exports = {
 			if (message.member.roles.cache.has(roleID)) check = true;
 		});
 		if (args.length < 1) return;
+		let storedCommand;
 		switch (args[0]) {
 		case 'create':
 			if (!check) return;
@@ -25,7 +26,7 @@ module.exports = {
 				message.reply('you are restricted from creating this tag!');
 				return;
 			}
-			let storedCommand = await message.GuildCommands.findOne({
+			storedCommand = await message.GuildCommands.findOne({
 				gid: message.guild.id,
 				command: args[1],
 			});
