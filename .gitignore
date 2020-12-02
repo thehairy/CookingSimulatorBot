@@ -1,0 +1,11 @@
+.env
+/node_modules
+*.orig
+logs/
+*.log
+npm-debug.log*
+pids
+*.pid
+*.seed
+.tmp/
+package-lock.json

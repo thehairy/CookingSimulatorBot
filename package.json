@@ -1,0 +1,48 @@
+{
+  "name": "hairydiscordbot",
+  "version": "1.0.1",
+  "description": "The official Hairy Discord Bot!",
+  "main": "index.js",
+  "scripts": {
+    "start": "node .",
+    "dev": "nodemon .",
+    "debug": "eslint ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thehairy/HairyDiscordBot.git"
+  },
+  "keywords": [
+    "hairy"
+  ],
+  "author": "Chewbacca",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/thehairy/HairyDiscordBot/issues"
+  },
+  "homepage": "https://github.com/thehairy/HairyDiscordBot#readme",
+  "dependencies": {
+    "discord.js": "github:monbrey/discord.js#inline-replies",
+    "dotenv": "^8.2.0",
+    "ffmpeg-static": "^4.2.7",
+    "get-cat-facts": "0.0.3",
+    "mongoose": "^5.10.8",
+    "random-stuff-api": "^4.0.0",
+    "tech-quote-of-the-week": "^2.1.1",
+    "ts3-nodejs-library": "^3.1.0",
+    "ytdl-core": "^3.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.4"
+  },
+  "optionalDependencies": {
+    "@discordjs/opus": "^0.3.2",
+    "erlpack": "github:discord/erlpack",
+    "zlib-sync": "^0.1.7"
+  },
+  "renovate": {
+    "extends": [
+      "teal"
+    ]
+  }
+}
