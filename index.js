@@ -108,7 +108,6 @@ client.on('message', async (message) => {
 		command: command,
 	});
 	if (storedCommands) {
-		console.log(storedCommands);
 		// Delete database entry if the text is undefined/empty
 		if (storedCommands.text.length < 1) {
 			GuildCommands.deleteOne({
