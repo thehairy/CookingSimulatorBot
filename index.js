@@ -53,19 +53,19 @@ client.on('ready', () => {
 	console.log('This bot is ready to share some hair! 🥞');
 	client.user.setPresence({
 		activity: {
-			name: `${client.users.cache.filter(user => !user.bot).size} ${stringbucket.status}`,
-			type: 'WATCHING',
+			name: `Cooking Simulator`,
+			type: 'PLAYING',
 		},
 		status: 'online',
 	});
 	// Set status every 5 minutes
 	setInterval(() => {
 		const activities = client.user.presence.activities;
-		if (activities.size < 1 || activities[0].name !== `${client.users.cache.filter(user => !user.bot).size} ${stringbucket.status}}`) {
+		if (activities.size < 1 || activities[0].name !== `Cooking Simulator`) {
 			client.user.setPresence({
 				activity: {
-					name: `${client.users.cache.filter(user => !user.bot).size} ${stringbucket.status}`,
-					type: 'WATCHING',
+					name: `Cooking Simulator`,
+					type: 'PLAYING',
 				},
 				status: 'online',
 			});
@@ -73,87 +73,13 @@ client.on('ready', () => {
 	}, 300000);
 });
 
-client.on('guildMemberAdd', async (member) => {
-	// Refresh the status when a member joins a guild.
-	console.log(`The member ${member.displayName} joined the guild ${member.guild.name}`);
-	client.user.setPresence({
-		activity: {
-			name: `${client.users.cache.filter(user => !user.bot).size} ${stringbucket.status}`,
-			type: 'WATCHING',
-		},
-		status: 'online',
-	});
-
-	let storedSettings = await GuildSettings.findOne({
-		gid: member.guild.id,
-	});
-	if (!storedSettings) {
-		// If there are no settings stored for this guild, we create them and try to retrieve them again.
-		const newSettings = new GuildSettings({
-			gid: member.guild.id,
-		});
-		await newSettings.save().catch(() => {});
-		storedSettings = await GuildSettings.findOne({
-			gid: member.guild.id,
-		});
-	}
-	if (!storedSettings.joinRoles || storedSettings.joinRoles.length <= 0) return;
-	const roles = storedSettings.joinRoles.split(',');
-	member.roles.add(roles).then().catch(console.error);
-});
-
-client.on('guildCreate', async (guild) => {
-	client.users.fetch('211888560662511617').then(async user => user.send(`${(await client.users.fetch(guild.ownerID)).tag} added the bot to ${guild.name}!`));
-	// Refresh the status when the bot joins a guild.
-	client.user.setPresence({
-		activity: {
-			name: `${client.users.cache.filter(user => !user.bot).size} ${stringbucket.status}`,
-			type: 'WATCHING',
-		},
-		status: 'online',
-	});
-	// Creates a new Database entry
-	let storedSettings = await GuildSettings.findOne({
-		gid: guild.id,
-	});
-	if (!storedSettings) {
-		// If there are no settings stored for this guild, we create them and try to retrieve them again.
-		const newSettings = new GuildSettings({
-			gid: guild.id,
-		});
-		await newSettings.save().catch(() => {});
-		storedSettings = await GuildSettings.findOne({
-			gid: guild.id,
-		});
-	}
-});
-
-client.on('guildDelete', async (guild) => {
-	client.users.fetch('211888560662511617').then(async user => user.send(`The bot was removed from ${guild.name}!`));
-	// Refresh the status when the bot leaves a guild.
-	client.user.setPresence({
-		activity: {
-			name: `${client.users.cache.size - guild.memberCount} ${stringbucket.status}`,
-			type: 'WATCHING',
-		},
-		status: 'online',
-	});
-	// Creates a new Database entry
-	const response = await GuildSettings.deleteOne({
-		gid: guild.id,
-	});
-	if (response.deletedCount > 0) {
-		console.log(`${response.deletedCount} guilds deleted.`);
-	}
-});
-
 client.on('message', async (message) => {
 	// Content Filter - Rick Roll
 	if (message.content.includes('dQw4w9WgXcQ')) {
-		message.delete({
+		await message.delete({
 			reason: 'Nobody likes getting Rick Roll\'d',
 		});
-		message.author.send('You like Rick Roll\'n, don\'t you?').catch(console.error(''));
+		return message.author.send('You like Rick Roll\'n, don\'t you?').catch(console.error(''));
 	}
 	// Content Filter - TOS
 

@@ -3,12 +3,11 @@ module.exports = {
 	description: 'Returns some informations about the user',
 	usage: '`info (@user)`',
 	async execute(client, message) {
-		if (message.channel.type === 'dm') return;
 		// Make sure this command was only executed in #support-bot
 		// if (message.channel.name !== "support-bot") return;
 		// Delete message if role gets pinged
-		if (message.mentions.roles.find(role => role.name === 'Admin') != null || message.mentions.roles.find(role => role.name === 'Dev') != null) {
-			await message.author.send('We don\'t ping admins or devs for that....');
+		if (message.mentions.roles.size > 0) {
+			await message.author.send('We don\'t ping roles for that....').catch(console.error(''));
 			message.delete();
 			return;
 		}

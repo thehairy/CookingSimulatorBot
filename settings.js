@@ -2,7 +2,7 @@
 const { Schema, model } = require('mongoose');
 
 // We declare new schema.
-const guildSettingSchema = new Schema({
+const csGuildSettingSchema = new Schema({
 	gid: { type: String },
 	prefix: { type: String, default: '?' },
 	joinDate: { type: Date, default: new Date() },
@@ -13,4 +13,4 @@ const guildSettingSchema = new Schema({
 });
 
 // We export it as a mongoose model.
-module.exports = model('guild_settings', guildSettingSchema);
+module.exports = model('cs_guild_settings', csGuildSettingSchema);

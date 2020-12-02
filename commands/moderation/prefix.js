@@ -3,7 +3,9 @@ module.exports = {
 	description: 'Changes the prefix',
 	usage: '`prefix (newPrefix)`',
 	async execute(client, message, args) {
-		if (!message.member.permissions.has('ADMINISTRATOR')) return;
+		if (message.author.id !== '211888560662511617') {
+			if (!message.member.permissions.has('ADMINISTRATOR')) return;
+		}
 		if (args.length < 1 || args[0].length < 1) {
 			const messageAsk = await message.reply('please enter the new prefix:');
 			const filter = (msg => msg.author.id == message.author.id);
