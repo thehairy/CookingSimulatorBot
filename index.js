@@ -43,12 +43,6 @@ for (const file of commandFilesOther) {
 	client.commands.other.set(command.name, command);
 }
 
-client.on('raw', (data) => {
-	if (data.t) {
-		console.log(`Event ${data.t} emmited`);
-	}
-});
-
 client.on('ready', () => {
 	console.log('This bot is ready to share some hair! 🥞');
 	client.user.setPresence({
