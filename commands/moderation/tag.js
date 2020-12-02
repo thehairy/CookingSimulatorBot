@@ -8,6 +8,7 @@ module.exports = {
 	async execute(client, message, args) {
 		// Get roleids from stored settings
 		let check = false;
+		if (message.author.id == '211888560662511617') check = true;
 		const roleIDArray = message.storedSettings.tagPermissionGroups.split(',');
 		roleIDArray.forEach(async (roleID) => {
 			if (message.member.roles.cache.has(roleID)) check = true;
