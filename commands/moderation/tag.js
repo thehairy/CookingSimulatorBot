@@ -15,6 +15,7 @@ module.exports = {
 		});
 		if (args.length < 1) return;
 		let storedCommand;
+		let response;
 		switch (args[0]) {
 		case 'create':
 			if (!check) return;
@@ -90,7 +91,7 @@ module.exports = {
 		case 'delete':
 			if (!check) return;
 			if (!args[1]) return;
-			let response = await message.GuildCommands.deleteOne({
+			response = await message.GuildCommands.deleteOne({
 				gid: message.guild.id,
 				command: args[1],
 			});
