@@ -12,6 +12,8 @@ module.exports = {
 			return;
 		}
 
+		if (message.channel.id !== '732174841095913472') return;
+
 		const member = message.mentions.members.first() != null ? message.mentions.members.first() : message.member;
 		const joined = member.joinedAt;
 		const created = member.user.createdAt;
