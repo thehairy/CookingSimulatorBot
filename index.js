@@ -1,5 +1,4 @@
 const Discord = require('discord.js');
-const stringbucket = require('./stringbucket.json');
 const fs = require('fs');
 require('dotenv').config();
 const MusicClient = require('./src/struct/client.js');
@@ -47,7 +46,7 @@ client.on('ready', () => {
 	console.log('This bot is ready to share some hair! 🥞');
 	client.user.setPresence({
 		activity: {
-			name: `Cooking Simulator`,
+			name: 'Cooking Simulator',
 			type: 'PLAYING',
 		},
 		status: 'online',
@@ -55,10 +54,10 @@ client.on('ready', () => {
 	// Set status every 5 minutes
 	setInterval(() => {
 		const activities = client.user.presence.activities;
-		if (activities.size < 1 || activities[0].name !== `Cooking Simulator`) {
+		if (activities.size < 1 || activities[0].name !== 'Cooking Simulator') {
 			client.user.setPresence({
 				activity: {
-					name: `Cooking Simulator`,
+					name: 'Cooking Simulator',
 					type: 'PLAYING',
 				},
 				status: 'online',
