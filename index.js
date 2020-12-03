@@ -151,8 +151,10 @@ client.on('message', async (message) => {
 		message.storedSettings = storedSettings;
 
 		Object.keys(client.commands).forEach((key) => {
-			if (client.commands[key].has(command)) client.commands[key].get(command).execute(client, message, args);
-			return;
+			if (client.commands[key].has(command)) {
+				if (key == 'fun' && message.channel.id !== '732174841095913472') return;
+				return client.commands[key].get(command).execute(client, message, args);
+			}
 		});
 	} catch (error) {
 		// Maybe send a nice and sexy emoji too
