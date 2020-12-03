@@ -5,7 +5,7 @@ module.exports = class extends Client {
 		super({
 			disableMentions: 'everyone',
 			ws: {
-				intents: ['GUILD_MESSAGES', 'GUILDS', 'GUILD_MEMBERS', 'GUILD_PRESENCES', 'GUILD_VOICE_STATE'],
+				intents: ['GUILD_MESSAGES', 'GUILDS', 'GUILD_MEMBERS', 'GUILD_PRESENCES', 'GUILD_VOICE_STATES'],
 			},
 		});
 		this.commands = new Collection();
