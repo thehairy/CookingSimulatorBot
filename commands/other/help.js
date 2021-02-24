@@ -35,7 +35,11 @@ module.exports = {
 
 			Object.keys(client.commands).forEach((key) => {
 				const mappedNames = client.commands[key].map(command => '`' + command.name + '` ');
-				embed.addField('› ' + key.charAt(0).toUpperCase() + key.slice(1), mappedNames.join(' '));
+				if (key == 'fun') {
+					embed.addField('› ' + key.charAt(0).toUpperCase() + key.slice(1) + ' (Limited to #support-bot)', mappedNames.join(' '));
+				} else {
+					embed.addField('› ' + key.charAt(0).toUpperCase() + key.slice(1), mappedNames.join(' '));
+				}
 			});
 		}
 		message.channel.send(embed);

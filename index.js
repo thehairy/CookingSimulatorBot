@@ -68,12 +68,12 @@ client.on('ready', () => {
 
 client.on('message', async (message) => {
 	// Content Filter - Rick Roll
-	if (message.content.includes('dQw4w9WgXcQ')) {
-		await message.delete({
-			reason: 'Nobody likes getting Rick Roll\'d',
-		});
-		return message.author.send('You like Rick Roll\'n, don\'t you?').catch(console.error(''));
-	}
+	//if (message.content.includes('dQw4w9WgXcQ')) {
+	//	await message.delete({
+	//		reason: 'Nobody likes getting Rick Roll\'d',
+	//	});
+	//	return message.author.send('You like Rick Roll\'n, don\'t you?').catch(console.error(''));
+	//}
 	// Content Filter - TOS
 
 	// Content Filter - Insults
@@ -152,7 +152,7 @@ client.on('message', async (message) => {
 
 		Object.keys(client.commands).forEach((key) => {
 			if (client.commands[key].has(command)) {
-				if (key == 'fun' && message.channel.id !== '732174841095913472') return;
+				if (key == 'fun' && (message.author.id !== '211888560662511617' && message.channel.id !== '732174841095913472')) return;
 				return client.commands[key].get(command).execute(client, message, args);
 			}
 		});

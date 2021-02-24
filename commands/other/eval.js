@@ -1,4 +1,5 @@
 const { MessageEmbed } = require('discord.js');
+const ytdl = require('ytdl-core');
 const owners = ['359761233861279744', '211888560662511617'];
 
 function clean(text) {
@@ -14,7 +15,7 @@ module.exports = {
 	description: 'Just eval\'ing some stuff for the bot owner',
 	usage: '`eval >toEval<`',
 	execute(client, message, args) {
-		const code = args.join(' ');
+		const code = args.join(' '); 
 
 		const embed = new MessageEmbed().setTitle('**Eval**');
 		embed.addField('Input', '```' + code + '```');
