@@ -63,23 +63,25 @@ client.on('ready', () => {
 				status: 'online',
 			});
 		}
-	}, 300000);
+	}, (360 * 60000));
 });
 
 client.on('message', async (message) => {
+	// Botception is bad. Really bad.
+	if (message.author.bot) return;
+
 	// Content Filter - Rick Roll
-	//if (message.content.includes('dQw4w9WgXcQ')) {
-	//	await message.delete({
-	//		reason: 'Nobody likes getting Rick Roll\'d',
-	//	});
-	//	return message.author.send('You like Rick Roll\'n, don\'t you?').catch(console.error(''));
-	//}
+	if (message.content.includes('dQw4w9WgXcQ')) {
+		if (message.deletable) {
+			await message.delete({
+				reason: 'Nobody likes getting Rick Roll\'d',
+			}).catch(() => {});
+			return message.author.send('You like Rick Roll\'n, don\'t you?').catch(console.error(''));
+		}
+	}
 	// Content Filter - TOS
 
 	// Content Filter - Insults
-
-	// Botception is bad. Really bad.
-	if (message.author.bot) return;
 
 	// Retrieving the guild settings from database.
 	let storedSettings = await GuildSettings.findOne({

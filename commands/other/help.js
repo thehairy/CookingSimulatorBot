@@ -34,7 +34,7 @@ module.exports = {
 			embed.setFooter(`${techQoute.text} ~ ${techQoute.author}`);
 
 			Object.keys(client.commands).forEach((key) => {
-				const mappedNames = client.commands[key].map(command => '`' + command.name + '` ');
+				const mappedNames = client.commands[key].filter(c => !c.private && (!c.permission || message.member.hasPermission(c.permission))).map(command => '`' + command.name + '` ');
 				if (key == 'fun') {
 					embed.addField('› ' + key.charAt(0).toUpperCase() + key.slice(1) + ' (Limited to #support-bot)', mappedNames.join(' '));
 				} else {
