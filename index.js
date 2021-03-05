@@ -117,7 +117,8 @@ client.on('message', async (message) => {
 			});
 		} else {
 			// Output the text
-			message.channel.send(storedCommands.text);
+			let msg = await message.channel.send(storedCommands.text);
+			msg.suppressEmbeds(true);
 		}
 		return;
 	}
