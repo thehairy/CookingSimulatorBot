@@ -11,7 +11,7 @@ module.exports = {
             data: {
                 type: 4,
                 data: {
-                    content: `Pong! ${client.ws.ping}ms...`
+                    content: `:tada: | Still alive!`
                 }
             }
         })

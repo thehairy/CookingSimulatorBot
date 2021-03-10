@@ -15,18 +15,26 @@ module.exports = {
         }
     },
     async execute(client, interaction) {
-        //console.log(interaction.data.options[0].value);
-
-        //if (interaction.channel_id != '732174841095913472') return;
+		// Abort if not the correct channel
+		const allowedChannels = ['732174841095913472', '818159338186473532']
+        if (!allowedChannels.includes(interaction.channel_id)) {
+			return client.api.interactions(interaction.id, interaction.token).callback.post({
+				data: {
+					type: 3,
+					data: {
+						content: 'You are not in the correct channel. Please use <#818159338186473532>.',
+						flags: 64
+					}
+				}
+			});
+		};
 
         const guild = client.guilds.cache.get(interaction.guild_id);
         const member = await guild.members.fetch(interaction.data.options[0].value);
-        const channel = guild.channels.cache.get(interaction.channel_id);
         
 		const joined = member.joinedAt;
 		const created = member.user.createdAt;
 
-		// TODO: Format the date. There is a resource in the guide on how to format it.
 		const joinedArray = joined.toISOString().replace(/T/, ' ').replace(/\..+/, '').split(' ');
 		const joinedN = joinedArray[0].split('-');
 		const joinedDay = joinedN[2] == '01' ? '1st' : joinedN[2] == '02' ? '2nd' : joinedN[2] == '03' ? '3rd' : joinedN[2] + 'th';
@@ -48,6 +56,7 @@ module.exports = {
 				rolesString += `<@&${role.id}> `;
 			}
 		});
+
 		// Create sexy embed!
 		const embedMentioned = {
 			color: 0x00ffff,
@@ -125,13 +134,13 @@ function getMonth(month) {
 function getStatus(status) {
 	switch (status) {
 	case 'online':
-		return 'Online';
+		return '🟢';
 	case 'idle':
-		return 'AFK';
+		return '🌙';
 	case 'offline':
-		return 'Offline';
+		return '⚫';
 	case 'dnd':
-		return 'Do Not Disturb';
+		return '🔴';
 	default:
 		return 'Status not available';
 	}
