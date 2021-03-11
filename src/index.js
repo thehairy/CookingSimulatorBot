@@ -1,5 +1,6 @@
-const { Client, Intents, Collection } = require('discord.js');
+const { Client, Intents, Collection, MessageEmbed } = require('discord.js');
 const fs = require('fs');
+const utils = require('./utils');
 require('dotenv').config();
 
 // Intents, Client & Commands
@@ -18,14 +19,50 @@ for (const file of commandFiles) {
 // Events
 client.on('ready', () => {
     console.log('Client ready to rumble!');
-    
-    // Slash Commands
-    client.commands.forEach(command => {
-        client.api.applications(client.user.id).guilds('632613831301922866').commands.post(command.create);
-    })
+
+	client.user.setPresence({
+		activity: {
+			name: 'Cooking Simulator',
+			type: 'PLAYING',
+		},
+		status: 'online',
+	})
+
+	setInterval(() => {
+		client.user.setPresence({
+			activity: {
+				name: 'Cooking Simulator',
+				type: 'PLAYING',
+			},
+			status: 'online',
+		})
+	}, 21600000);
 })
 
 client.on('message', (message) => {
+	if (message.author.id == '211888560662511617' && message.content.startsWith('?')) {
+		const args = message.content.slice(1).replace(/[ \r\n|\r|\n]/gi, ' ').trim().split(' ');
+		const command = args.shift().toLowerCase();
+
+		if (command == 'eval') {
+			const code = args.join(' ');
+
+			const embed = new MessageEmbed().setTitle('**Eval**');
+			embed.addField('Input', '```' + code + '```'); 
+
+			try {
+				let evaled = eval(code);
+				if (typeof evaled !== 'string') {
+					evaled = require('util').inspect(evaled);
+				}
+				embed.addField('Output', '```' + utils.clean(evaled) + '```');
+			} catch (err) {
+				embed.addField('Error', `\`\`\`${utils.clean(err.toString())}\`\`\``);
+			}
+
+			message.channel.send(embed);
+		}
+	}
 });
 
 client.ws.on('INTERACTION_CREATE', async (interaction) => {
