@@ -28,7 +28,7 @@ module.exports = {
 		// Grab important informations
 		const executor = await guild.members.fetch(interaction.member.user.id);
 		const target = await guild.members.fetch(interaction.data.options.find(o => o.name == 'user').value)
-		const reason = interaction.data.options.find(o => o.name == 'reason').value || '';
+		const reason = interaction.data.options.find(o => o.name == 'reason') ? interaction.data.options.find(o => o.name == 'reason').value : '';
 
 		// Return error if executor or target are invalid
 		if (!executor || !target) return utils.sendHiddenMessage(client, interaction, 'Something went wrong!');

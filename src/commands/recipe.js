@@ -53,15 +53,15 @@ module.exports = {
 				break;
 			}
 			case 'mobile': {
-				recipesMode = recipes.normal;
+				recipesMode = recipes.mobile;
 				break;
 			}
 			case 'cac': {
-				recipesMode = recipes.normal;
+				recipesMode = recipes.cac;
 				break;
 			}
 			case 'pizza': {
-				recipesMode = recipes.normal;
+				recipesMode = recipes.pizza;
 				break;
 			}
 		}
