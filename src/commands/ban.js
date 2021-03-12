@@ -37,7 +37,7 @@ module.exports = {
 		if (!utils.checkPermission(executor, 'BAN_MEMBERS')) return utils.sendHiddenMessage(client, interaction, 'You do not have the required permissions to ban a member.');
 		if (!utils.higherRole(executor.roles.highest, target.roles.highest)) return utils.sendHiddenMessage(client, interaction, 'You do not have the required permissions to ban this member.');
 
-		const banned = await target.ban({ reason: reason });
+		const banned = await target.ban({ days: 7, reason: reason });
 		if (banned) {
 			// Success
 			return utils.sendHiddenMessageAck(client, interaction, 'Member successfully banned.');
