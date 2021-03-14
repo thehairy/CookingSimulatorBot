@@ -8,8 +8,7 @@ module.exports = {
                 {
                     name: 'user',
                     description: 'The user who you want information about',
-                    type: 6,
-                    required: true
+                    type: 6
                 }
             ]
         }
@@ -30,7 +29,13 @@ module.exports = {
 		};
 
         const guild = client.guilds.cache.get(interaction.guild_id);
-        const member = await guild.members.fetch(interaction.data.options[0].value);
+		
+		let member;
+		if (interaction.data.options) {
+			member = await guild.members.fetch(interaction.data.options[0].value);
+		} else {
+			member = await guild.members.fetch(interaction.member.user.id);
+		}
         
 		const joined = member.joinedAt;
 		const created = member.user.createdAt;
