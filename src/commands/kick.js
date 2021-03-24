@@ -16,7 +16,8 @@ module.exports = {
 				{
 					name: 'reason',
 					description: 'The reason for the kick',
-					type: 3
+					type: 3,
+					required: true
 				},
 				{
 					name: 'deleteMessages',
@@ -35,7 +36,10 @@ module.exports = {
 		const target = await guild.members.fetch(interaction.data.options[0].value)
 		const targetUser = target.user;
 		const reason = interaction.data.options.find(o => o.name == 'reason').value || '';
-		const purge = interaction.data.options.find(o => o.name == 'deletemessages').value || false;
+		let purge = false;
+		if (interaction.data.options.find(o => o.name == 'deleteMessages')) {
+			purge = interaction.data.options.find(o => o.name.toLowerCase() == 'deletemessages').value || false;
+		}
 
 		// Check if permissions are valid
 		if (!utils.checkPermission(executor, 'KICK_MEMBERS')) return utils.sendHiddenMessage(client, interaction, 'You do not have the required permissions to kick a member.');

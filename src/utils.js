@@ -9,7 +9,7 @@ module.exports = {
 			data: {
 				type: 5
 			}
-		})
+		});
 	},
 	async sendHiddenMessage(client, interaction, message) {
 		if (!message) return console.log('No message was provided!');
@@ -32,6 +32,14 @@ module.exports = {
 					content: message,
 					flags: 64
 				}
+			}
+		});
+	},
+	async sendMessage(client, interaction, message) {
+		if (!message) return console.log('No message was provided!');
+		await client.api.webhooks(client.user.id, interaction.token).post({
+			data: {
+				content: message
 			}
 		});
 	},

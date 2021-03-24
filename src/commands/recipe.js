@@ -67,11 +67,8 @@ module.exports = {
 		}
 
 		const recipeToCook = recipesMode[utils.getRandom(0, recipesMode.length)];
-		const msg = await channel.send('Hmm, let me think. :thinking:');
-		channel.startTyping();
 		setTimeout(() => {
-			msg.edit(`You should make some \`${recipeToCook}\`!`);
-			channel.stopTyping(true);
+			utils.sendMessage(client, interaction, `You should make some ${recipeToCook}!`);
 		}, 5000);
     }
 }
