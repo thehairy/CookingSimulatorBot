@@ -16,8 +16,7 @@ module.exports = {
 				{
 					name: 'reason',
 					description: 'The reason for the kick',
-					type: 3,
-					required: true
+					type: 3
 				},
 				{
 					name: 'deleteMessages',
@@ -35,10 +34,13 @@ module.exports = {
 		const executor = await guild.members.fetch(interaction.member.user.id);
 		const target = await guild.members.fetch(interaction.data.options[0].value)
 		const targetUser = target.user;
-		const reason = interaction.data.options.find(o => o.name == 'reason').value || '';
+		let reason = '';
+		if (interaction.data.options.find(o => o.name.toLowerCase() == 'reason')) {
+			purge = interaction.data.options.find(o => o.name.toLowerCase() == 'reason').value;
+		}
 		let purge = false;
-		if (interaction.data.options.find(o => o.name == 'deleteMessages')) {
-			purge = interaction.data.options.find(o => o.name.toLowerCase() == 'deletemessages').value || false;
+		if (interaction.data.options.find(o => o.name.toLowerCase() == 'deletemessages')) {
+			purge = interaction.data.options.find(o => o.name.toLowerCase() == 'deletemessages').value;
 		}
 
 		// Check if permissions are valid
