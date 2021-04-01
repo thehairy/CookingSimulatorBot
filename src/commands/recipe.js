@@ -68,7 +68,7 @@ module.exports = {
 
 		const recipeToCook = recipesMode[utils.getRandom(0, recipesMode.length)];
 		setTimeout(() => {
-			utils.sendMessage(client, interaction, `You should make some ${recipeToCook}!`);
+			utils.sendMessageAfterLoading(client, interaction, `You should make some ${recipeToCook}!`);
 		}, 5000);
     }
 }

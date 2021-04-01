@@ -37,6 +37,18 @@ module.exports = {
 	},
 	async sendMessage(client, interaction, message) {
 		if (!message) return console.log('No message was provided!');
+		await client.api.interactions(interaction.id, interaction.token).callback.post({
+			data: {
+				type: 4,
+				data: {
+					content: message
+				}
+			}
+		})
+
+	},
+	async sendMessageAfterLoading(client, interaction, message) {
+		if (!message) return console.log('No message was provided!');
 		await client.api.webhooks(client.user.id, interaction.token).post({
 			data: {
 				content: message

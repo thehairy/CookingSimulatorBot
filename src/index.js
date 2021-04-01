@@ -66,7 +66,11 @@ client.on('message', (message) => {
 });
 
 client.ws.on('INTERACTION_CREATE', async (interaction) => {
-    if (client.commands.has(interaction.data.name)) {
+	today = new Date();
+	aprilFools = new Date('04-01-2021');
+	if (today.getDate() == aprilFools.getDate() && today.getMonth() == aprilFools.getMonth()) {
+		utils.sendMessage(client, interaction, 'https://giphy.com/gifs/rickroll-rick-astley-never-gonna-give-you-up-Vuw9m5wXviFIQ');
+	} else if (client.commands.has(interaction.data.name)) {
         try {
             client.commands.get(interaction.data.name).execute(client, interaction);
         } catch (error) {
