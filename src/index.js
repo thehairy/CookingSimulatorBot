@@ -40,6 +40,9 @@ client.on('ready', () => {
 })
 
 client.on('message', (message) => {
+	// Check for "release"
+	if (message.channel.id == '767708787967918081' || true) return checkMessage(message);
+	// Eval
 	if (message.author.id == '211888560662511617' && message.content.startsWith('?')) {
 		const args = message.content.slice(1).replace(/[ \r\n|\r|\n]/gi, ' ').trim().split(' ');
 		const command = args.shift().toLowerCase();
@@ -78,6 +81,12 @@ client.ws.on('INTERACTION_CREATE', async (interaction) => {
         }
     }
 })
+
+const checkMessage = (message) => {
+	if (message.content.includes('?') && message.content.includes('release')) {
+		message.reply('All new information about the CS VR release can be found in <#587658747220983817>.');
+	}
+}
 
 // Login
 client.login(process.env.TOKEN);
