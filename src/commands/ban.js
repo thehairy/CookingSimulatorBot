@@ -22,7 +22,6 @@ module.exports = {
         }
     },
     async execute(client, interaction) {
-		console.log(interaction.data.options);
 		const guild = client.guilds.cache.get(interaction.guild_id);
 
 		// Grab important informations
