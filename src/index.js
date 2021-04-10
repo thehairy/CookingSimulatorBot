@@ -41,7 +41,7 @@ client.on('ready', () => {
 
 client.on('message', (message) => {
 	// Check for "release"
-	if (message.channel.id == '767708787967918081' || true) return checkMessage(message);
+	if (message.channel.id == '767708787967918081') return checkMessage(message);
 	// Eval
 	if (message.author.id == '211888560662511617' && message.content.startsWith('?')) {
 		const args = message.content.slice(1).replace(/[ \r\n|\r|\n]/gi, ' ').trim().split(' ');
