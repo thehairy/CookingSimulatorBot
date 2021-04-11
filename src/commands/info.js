@@ -1,3 +1,5 @@
+const Discord = require('discord.js')
+
 module.exports = {
     name: 'info',
     create: {
@@ -16,7 +18,7 @@ module.exports = {
     async execute(client, interaction) {
 		// Abort if not the correct channel
 		const allowedChannels = ['732174841095913472', '818159338186473532']
-        if (!allowedChannels.includes(interaction.channel_id)) {
+        if (!allowedChannels.includes(interaction.channelID)) {
 			return client.api.interactions(interaction.id, interaction.token).callback.post({
 				data: {
 					type: 3,
@@ -28,13 +30,13 @@ module.exports = {
 			});
 		};
 
-        const guild = client.guilds.cache.get(interaction.guild_id);
+        const guild = client.guilds.cache.get(interaction.guildID);
 		
 		let member;
-		if (interaction.data.options) {
-			member = await guild.members.fetch(interaction.data.options[0].value);
+		if (interaction.options.length > 0) {
+			member = interaction.options[0].member;
 		} else {
-			member = await guild.members.fetch(interaction.member.user.id);
+			member = interaction.member;
 		}
         
 		const joined = member.joinedAt;
@@ -87,7 +89,7 @@ module.exports = {
 			},
 			{
 				name: 'Did you know...',
-				value: `...that already ${days} days have passed since the member joined?\n...that the member uses Discord for ${createdString} now?`,
+				value: `...that already ${days} days have passed since the member joined?\n...that the member used Discord for ${createdString} now?`,
 			},
 			],
 			footer: {
@@ -96,14 +98,7 @@ module.exports = {
 		};
         
         // Respond
-        client.api.interactions(interaction.id, interaction.token).callback.post({
-            data: {
-                type: 4,
-                data: {
-                    embeds: [ embedMentioned ]
-                }
-            }
-        });
+        interaction.editReply({ embeds: [ embedMentioned ] });
     }
 }
 

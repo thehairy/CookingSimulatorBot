@@ -2,6 +2,7 @@ const utils = require('../utils');
 
 module.exports = {
     name: 'ban',
+	hidden: true,
     create: {
         data: {
             name: 'ban',
@@ -22,27 +23,27 @@ module.exports = {
         }
     },
     async execute(client, interaction) {
-		const guild = client.guilds.cache.get(interaction.guild_id);
+		const guild = client.guilds.cache.get(interaction.guildID);
 
 		// Grab important informations
-		const executor = await guild.members.fetch(interaction.member.user.id);
-		const target = await guild.members.fetch(interaction.data.options.find(o => o.name == 'user').value)
-		const reason = interaction.data.options.find(o => o.name == 'reason') ? interaction.data.options.find(o => o.name == 'reason').value : '';
+		const executor = interaction.member;
+		const target = interaction.options.find(o => o.name == 'user').member;
+		const reason = interaction.options.find(o => o.name == 'reason') ? interaction.options.find(o => o.name == 'reason').value : '';
 
 		// Return error if executor or target are invalid
-		if (!executor || !target) return utils.sendHiddenMessage(client, interaction, 'Something went wrong!');
+		if (!executor || !target) return interaction.editReply('Something went wrong!', { ephemeral: true })
 
 		// Check if permissions are valid
-		if (!utils.checkPermission(executor, 'BAN_MEMBERS')) return utils.sendHiddenMessage(client, interaction, 'You do not have the required permissions to ban a member.');
-		if (!utils.higherRole(executor.roles.highest, target.roles.highest)) return utils.sendHiddenMessage(client, interaction, 'You do not have the required permissions to ban this member.');
+		if (!utils.checkPermission(executor, 'BAN_MEMBERS')) return interaction.editReply('You do not have the required permissions to ban a member.', { ephemeral: true });
+		if (!utils.higherRole(executor.roles.highest, target.roles.highest)) return interaction.editReply('You do not have the required permissions to ban this member.', { ephemeral: true });
 
 		const banned = await target.ban({ days: 7, reason: reason });
 		if (banned) {
 			// Success
-			return utils.sendHiddenMessageAck(client, interaction, 'Member successfully banned.');
+			return interaction.editReply('Member successfully banned!', { ephemeral: true });
 		} else {
 			// No Success
-			return utils.sendHiddenMessage(client, interaction, 'Something went wrong.');
+			return interaction.editReply('Something went wrong!', { ephemeral: true });
 		}
     }
 }

@@ -68,25 +68,30 @@ client.on('message', (message) => {
 	}
 });
 
-client.ws.on('INTERACTION_CREATE', async (interaction) => {
+client.on('interaction', (interaction) => {
+	if (!interaction.isCommand()) return;
+
 	today = new Date();
 	aprilFools = new Date('04-01-2021');
 	if (today.getDate() == aprilFools.getDate() && today.getMonth() == aprilFools.getMonth()) {
-		utils.sendMessage(client, interaction, 'https://giphy.com/gifs/rickroll-rick-astley-never-gonna-give-you-up-Vuw9m5wXviFIQ');
-	} else if (client.commands.has(interaction.data.name)) {
+		interaction.reply('https://giphy.com/gifs/rickroll-rick-astley-never-gonna-give-you-up-Vuw9m5wXviFIQ')
+	} else if (client.commands.has(interaction.commandName)) {
         try {
-            client.commands.get(interaction.data.name).execute(client, interaction);
+			const command = client.commands.get(interaction.commandName);
+			
+			interaction.defer(command.hidden ? true : false);
+            command.execute(client, interaction);
         } catch (error) {
             console.error(error);
         }
     }
-})
+});
 
 const checkMessage = (message) => {
 	if (message.content.includes('?') && message.content.includes('release')) {
 		message.reply('All new information about the CS VR release can be found in <#587658747220983817>.');
 	}
-}
+};
 
 // Login
 client.login(process.env.TOKEN);

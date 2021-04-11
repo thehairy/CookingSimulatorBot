@@ -35,7 +35,7 @@ module.exports = {
         }
     },
     async execute(client, interaction) {
-		const category = interaction.data.options[0].value;
+		const category = interaction.options[0].value;
 		
 		let joke = "";
 
@@ -57,6 +57,6 @@ module.exports = {
 		const embed = new MessageEmbed()
 			.setDescription(joke);
 
-		await utils.sendEmbed(client, interaction, embed);
+		await interaction.editReply(embed);
     }
 }

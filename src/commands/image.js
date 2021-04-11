@@ -39,7 +39,7 @@ module.exports = {
         }
     },
     async execute(client, interaction) {
-		const category = interaction.data.options[0].value;
+		const category = interaction.options[0].value;
 		let image = "";
 		let fact = "";
 
@@ -80,6 +80,6 @@ module.exports = {
 			.setDescription(fact)
 			.setImage(image)
 
-		await utils.sendEmbed(client, interaction, embed);
+		await interaction.editReply(embed);
     }
 }
