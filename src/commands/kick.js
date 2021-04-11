@@ -2,6 +2,7 @@ const utils = require('../utils');
 
 module.exports = {
     name: 'kick',
+	hidden: true,
     create: {
         data: {
             name: 'kick',
@@ -27,24 +28,25 @@ module.exports = {
         }
     },
     async execute(client, interaction) {
-		const guild = client.guilds.cache.get(interaction.guild_id);
+		const guild = client.guilds.cache.get(interaction.guildID);
 
 		// Grab important informations
-		const executor = await guild.members.fetch(interaction.member.user.id);
-		const target = await guild.members.fetch(interaction.data.options[0].value)
+		const executor = interaction.member;
+		const target = interaction.options.find(o => o.name == 'user').member;
 		const targetUser = target.user;
+
 		let reason = '';
-		if (interaction.data.options.find(o => o.name.toLowerCase() == 'reason')) {
-			purge = interaction.data.options.find(o => o.name.toLowerCase() == 'reason').value;
+		if (interaction.options.find(o => o.name.toLowerCase() == 'reason')) {
+			reason = interaction.options.find(o => o.name.toLowerCase() == 'reason').value;
 		}
 		let purge = false;
-		if (interaction.data.options.find(o => o.name.toLowerCase() == 'deletemessages')) {
-			purge = interaction.data.options.find(o => o.name.toLowerCase() == 'deletemessages').value;
+		if (interaction.options.find(o => o.name.toLowerCase() == 'deletemessages')) {
+			purge = interaction.options.find(o => o.name.toLowerCase() == 'deletemessages').value;
 		}
 
 		// Check if permissions are valid
-		if (!utils.checkPermission(executor, 'KICK_MEMBERS')) return utils.sendHiddenMessage(client, interaction, 'You do not have the required permissions to kick a member.');
-		if (!utils.higherRole(executor.roles.highest, target.roles.highest)) return utils.sendHiddenMessage(client, interaction, 'You do not have the required permissions to kick this member.');
+		if (!utils.checkPermission(executor, 'BAN_MEMBERS')) return interaction.editReply('You do not have the required permissions to kick a member.', { ephemeral: true });
+		if (!utils.higherRole(executor.roles.highest, target.roles.highest)) return interaction.editReply('You do not have the required permissions to kick this member.', { ephemeral: true });
 
 		// Check if messages should be purged
 		if (purge) {
@@ -52,19 +54,19 @@ module.exports = {
 			if (banned) {
 				// Success
 				guild.members.unban(targetUser);
-				utils.sendHiddenMessageAck(client, interaction, 'Member successfully kicked.');
+				return interaction.editReply('Member successfully kicked!', { ephemeral: true });
 			} else {
 				// No success
-				utils.sendHiddenMessage(client, interaction, 'Something went wrong.');
+				return interaction.editReply('Something went wrong!', { ephemeral: true });
 			}
 		} else {
 			const kicked = await target.kick(reason);
 			if (kicked) {
 				// Success
-				utils.sendHiddenMessageAck(client, interaction, 'Member successfully kicked.');
+				return interaction.editReply('Member successfully kicked!', { ephemeral: true });
 			} else {
 				// No Success
-				utils.sendHiddenMessage(client, interaction, 'Something went wrong.');
+				return interaction.editReply('Something went wrong!', { ephemeral: true });
 			}
 		}
     }

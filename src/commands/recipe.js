@@ -38,13 +38,8 @@ module.exports = {
     },
     async execute(client, interaction) {
 		// Informations
-		const mode = interaction.data.options[0].value;
-		const channel = client.channels.cache.get(interaction.channel_id);
-
-		if (!channel) return utils.sendHiddenMessage(client, interaction, 'Something went wrong!');
-
-		// Loading
-		await utils.activateLoading(client, interaction);
+		const mode = interaction.options[0].value;
+		const channel = client.channels.cache.get(interaction.channelID);
 
 		let recipesMode;
 		switch (mode) {
@@ -68,7 +63,7 @@ module.exports = {
 
 		const recipeToCook = recipesMode[utils.getRandom(0, recipesMode.length)];
 		setTimeout(() => {
-			utils.sendMessageAfterLoading(client, interaction, `You should make some ${recipeToCook}!`);
+			interaction.editReply(`You should make some **${recipeToCook}**!`)
 		}, 5000);
     }
 }
