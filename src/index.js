@@ -94,4 +94,4 @@ const checkMessage = (message) => {
 };
 
 // Login
-client.login(process.env.TOKEN);
+client.login();
