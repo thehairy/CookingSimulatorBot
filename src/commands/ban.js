@@ -37,7 +37,7 @@ module.exports = {
 		if (!utils.checkPermission(executor, 'BAN_MEMBERS')) return interaction.editReply('You do not have the required permissions to ban a member.', { ephemeral: true });
 		if (!utils.higherRole(executor.roles.highest, target.roles.highest)) return interaction.editReply('You do not have the required permissions to ban this member.', { ephemeral: true });
 
-		const banned = await target.ban({ days: 7, reason: reason });
+		const banned = await target.ban({ days: 7, reason: reason }).catch(() => null);
 		if (banned) {
 			// Success
 			return interaction.editReply('Member successfully banned!', { ephemeral: true });
