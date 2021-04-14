@@ -50,7 +50,7 @@ module.exports = {
 
 		// Check if messages should be purged
 		if (purge) {
-			const banned = await target.ban({ days: 7, reason: reason});
+			const banned = await target.ban({ days: 7, reason: reason}).catch(() => null);
 			if (banned) {
 				// Success
 				guild.members.unban(targetUser);
@@ -60,7 +60,7 @@ module.exports = {
 				return interaction.editReply('Something went wrong!', { ephemeral: true });
 			}
 		} else {
-			const kicked = await target.kick(reason);
+			const kicked = await target.kick(reason).catch(() => null);
 			if (kicked) {
 				// Success
 				return interaction.editReply('Member successfully kicked!', { ephemeral: true });
