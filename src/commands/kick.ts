@@ -1,6 +1,6 @@
 import { Client, CommandInteraction, Guild, GuildMember, User } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
-import * as utils from '../utils.js';
+import { checkPermission, higherRole } from '../utils.js';
 
 export const name: Command['name'] = 'kick';
 
@@ -48,8 +48,8 @@ export const execute = async (client: Client, interaction: CommandInteraction): 
     }
 
     // Check if permissions are valid
-    if (!utils.checkPermission(executor, 'BAN_MEMBERS')) return (interaction.editReply('You do not have the required permissions to kick a member.') as unknown) as void;
-    if (!utils.higherRole(executor.roles.highest, target.roles.highest)) return (interaction.editReply('You do not have the required permissions to kick this member.') as unknown) as void;
+    if (!checkPermission(executor, 'BAN_MEMBERS')) return (interaction.editReply('You do not have the required permissions to kick a member.') as unknown) as void;
+    if (!higherRole(executor.roles.highest, target.roles.highest)) return (interaction.editReply('You do not have the required permissions to kick this member.') as unknown) as void;
 
     // Check if messages should be purged
     if (purge) {

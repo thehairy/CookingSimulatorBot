@@ -1,4 +1,4 @@
-import * as utils from '../utils.js';
+import { checkPermission, higherRole } from '../utils.js';
 export const name = 'ban';
 export const create = {
     name: 'ban',
@@ -26,9 +26,9 @@ export const execute = async (client, interaction) => {
     if (!executor || !target)
         return interaction.editReply('Something went wrong!');
     // Check if permissions are valid
-    if (!utils.checkPermission(executor, 'BAN_MEMBERS'))
+    if (!checkPermission(executor, 'BAN_MEMBERS'))
         return interaction.editReply('You do not have the required permissions to ban a member.');
-    if (!utils.higherRole(executor.roles.highest, target.roles.highest))
+    if (!higherRole(executor.roles.highest, target.roles.highest))
         return interaction.editReply('You do not have the required permissions to ban this member.');
     const banned = await target.ban({ days: 7, reason: reason }).catch(() => null);
     if (banned) {

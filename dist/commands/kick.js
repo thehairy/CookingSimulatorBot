@@ -1,4 +1,4 @@
-import * as utils from '../utils.js';
+import { checkPermission, higherRole } from '../utils.js';
 export const name = 'kick';
 export const hidden = true;
 export const create = {
@@ -38,9 +38,9 @@ export const execute = async (client, interaction) => {
         purge = interaction.options.find(o => o.name.toLowerCase() == 'deletemessages')?.value;
     }
     // Check if permissions are valid
-    if (!utils.checkPermission(executor, 'BAN_MEMBERS'))
+    if (!checkPermission(executor, 'BAN_MEMBERS'))
         return interaction.editReply('You do not have the required permissions to kick a member.');
-    if (!utils.higherRole(executor.roles.highest, target.roles.highest))
+    if (!higherRole(executor.roles.highest, target.roles.highest))
         return interaction.editReply('You do not have the required permissions to kick this member.');
     // Check if messages should be purged
     if (purge) {

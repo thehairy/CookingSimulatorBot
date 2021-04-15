@@ -13,3 +13,10 @@ interface Command {
     create: Discord.ApplicationCommandData;
     async execute(client: Discord.Client, interaction: Discord.CommandInteraction): Promise<void> | void;
 }
+
+interface Recipes {
+    normal: string[];
+    mobile: string[];
+    cac: string[];
+    pizza: string[];
+}

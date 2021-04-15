@@ -1,7 +1,7 @@
 import { Client, CommandInteraction } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
+import { getRandom } from '../utils.js';
 import recipes from '../recipes.json';
-import * as utils from '../utils.js';
 
 export const name: Command['name'] = 'recipe';
 
@@ -60,7 +60,7 @@ export const execute: Command['execute'] = async (client: Client, interaction: C
         }
     }
 
-    const recipeToCook = recipesMode[utils.getRandom(0, recipesMode.length)];
+    const recipeToCook = recipesMode[getRandom(0, recipesMode.length)];
     setTimeout(() => {
         interaction.editReply(`You should make some **${recipeToCook}**!`);
     }, 5000);

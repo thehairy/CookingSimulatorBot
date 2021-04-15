@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "build": "npx tsc -p ./ && npm run start",
-    "start": "node ."
+    "start": "node --experimental-json-modules ."
   },
   "keywords": [],
   "author": "",

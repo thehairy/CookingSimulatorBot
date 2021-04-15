@@ -1,7 +1,7 @@
 import { Client, CommandInteraction, GuildMember } from 'discord.js';
 import { Command } from 'src/@types/Util.js';
 
-import * as utils from '../utils.js';
+import { checkPermission, higherRole } from '../utils.js';
 
 export const name: Command['name'] = 'ban';
 
@@ -33,8 +33,8 @@ export const execute: Command['execute'] = async (client: Client, interaction: C
     if (!executor || !target) return (interaction.editReply('Something went wrong!') as unknown) as void;
 
     // Check if permissions are valid
-    if (!utils.checkPermission(executor, 'BAN_MEMBERS')) return (interaction.editReply('You do not have the required permissions to ban a member.') as unknown) as void;
-    if (!utils.higherRole(executor.roles.highest, target.roles.highest)) return (interaction.editReply('You do not have the required permissions to ban this member.') as unknown) as void;
+    if (!checkPermission(executor, 'BAN_MEMBERS')) return (interaction.editReply('You do not have the required permissions to ban a member.') as unknown) as void;
+    if (!higherRole(executor.roles.highest, target.roles.highest)) return (interaction.editReply('You do not have the required permissions to ban this member.') as unknown) as void;
 
     const banned: GuildMember | null = await target.ban({ days: 7, reason: reason }).catch(() => null);
     if (banned) {

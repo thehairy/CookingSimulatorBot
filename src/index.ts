@@ -3,7 +3,7 @@ import { Client, Intents, Collection, Message, MessageEmbed } from 'discord.js';
 
 import fs from 'fs';
 import util from 'util';
-import * as utils from './utils.js';
+import { clean } from './utils.js';
 
 import dotenv from 'dotenv';
 dotenv.config();
@@ -45,9 +45,9 @@ client.on('message', (message) => {
                 if (typeof evaled !== 'string') {
                     evaled = util.inspect(evaled);
                 }
-                embed.addField('Output', '```' + utils.clean(evaled) + '```');
+                embed.addField('Output', '```' + clean(evaled) + '```');
             } catch (err) {
-                embed.addField('Error', `\`\`\`${utils.clean(err.toString())}\`\`\``);
+                embed.addField('Error', `\`\`\`${clean(err.toString())}\`\`\``);
             }
 
             message.channel.send(embed);

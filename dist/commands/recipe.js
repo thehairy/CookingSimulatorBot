@@ -1,5 +1,5 @@
+import { getRandom } from '../utils.js';
 import recipes from '../recipes.json';
-import * as utils from '../utils.js';
 export const name = 'recipe';
 export const create = {
     name: 'recipe',
@@ -53,7 +53,7 @@ export const execute = async (client, interaction) => {
             break;
         }
     }
-    const recipeToCook = recipesMode[utils.getRandom(0, recipesMode.length)];
+    const recipeToCook = recipesMode[getRandom(0, recipesMode.length)];
     setTimeout(() => {
         interaction.editReply(`You should make some **${recipeToCook}**!`);
     }, 5000);
